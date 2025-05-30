@@ -155,6 +155,12 @@ class Database extends Translation implements DriverInterface
      */
     public function getSingleTranslationsFor($language)
     {
+        $languageModel = $this->getLanguage($language);
+
+        if (is_null($languageModel)) {
+            return collect();
+        }
+        
         $translations = $this->getLanguage($language)
             ->translations()
             ->where('group', 'like', '%single')
